@@ -1,28 +1,26 @@
-#instalar a biblioteca gTTS !pip install gTTS
 from gtts import gTTS
+from playsound import playsound
 
-text_to_say = "How are you doing?."
+# Função que cria e salva o áudio
+def create_and_save_audio(text, language, filename, slow=False):
+    gtts_object = gTTS(text=text, lang=language, slow=slow)
+    filepath = f"content\{filename}.wav"
+    gtts_object.save(filepath)
+    return filepath
 
-language = "en"
+# Textos para gravar
+english_text_to_say = "How are you doing?"
+english_language = "en"
+english_filename = "gtts_english"
 
-gtts_object = gTTS(text = text_to_say, 
-                  lang = language,
-                  slow = False)
-
-gtts_object.save("/content/gtts.wav")
-
-from IPython.display import Audio
-
-Audio("/content/gtts.wav")
-
-french_text = "Je vais au supermarché"
-
+french_text_to_say = "Je vais au supermarché"
 french_language = "fr"
+french_filename = "gtts_french"
 
-french_gtts_object = gTTS(text = french_text,
-                          lang = french_language,
-                          slow = True)
+# Criar e salvar áudios
+english_filepath = create_and_save_audio(english_text_to_say, english_language, english_filename)
+french_filepath = create_and_save_audio(french_text_to_say, french_language, french_filename, slow=True)
 
-french_gtts_object.save("/content/french.wav")
-
-Audio("/content/french.wav")
+# Reproduzir áudios
+playsound(english_filepath)
+playsound(french_filepath)
